@@ -731,17 +731,15 @@ a {
 }
 
 .servicos-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 3rem;
   align-items: center;
-  text-align: center;
 }
 
 @media (min-width: 768px) {
   .servicos-container {
-    max-width: 900px;
-    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -777,7 +775,6 @@ a {
   margin-bottom: 2rem;
   color: var(--color-brand-primary);
   letter-spacing: -0.02em;
-  text-align: center;
 }
 
 .section-subtitle {
@@ -787,7 +784,6 @@ a {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
-  text-align: center;
 }
 
 .section-text {
@@ -795,9 +791,6 @@ a {
   color: var(--text-muted);
   max-width: 800px;
   line-height: 1.8;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 @media (max-width: 768px) {
@@ -911,13 +904,6 @@ a {
   margin-bottom: 1rem;
 }
 
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
 .footer-col h4 {
   font-size: 1rem;
   margin-bottom: 1.5rem;
@@ -950,7 +936,6 @@ a {
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
-  justify-content: center;
 }
 
 .footer-bottom {
@@ -1073,12 +1058,10 @@ html[data-theme="dark"] .theme-dark-logo {
 
 .servicos-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 40px;
+  justify-content: space-between;
+  gap: 60px;
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .servicos-header-text {
@@ -1090,16 +1073,15 @@ html[data-theme="dark"] .theme-dark-logo {
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 25px;
-  text-align: center;
+  text-align: left;
 }
 
 .servicos-header-text .section-description {
   font-size: 1.2rem;
   line-height: 1.7;
   max-width: 550px;
-  margin: 0 auto 40px;
+  margin-bottom: 40px;
   color: var(--text-muted);
-  text-align: center;
 }
 
 .btn-orcamento {
@@ -1125,7 +1107,7 @@ html[data-theme="dark"] .theme-dark-logo {
 .servicos-header-image {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
 }
 
@@ -1575,7 +1557,6 @@ html[data-theme="dark"] .theme-dark-logo {
   gap: 2rem;
   margin-top: 2rem;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .stat-item {
@@ -1647,12 +1628,10 @@ html[data-theme="dark"] .theme-dark-logo {
 
 /* --- FAQ & Contact Section --- */
 .faq-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
   gap: 3rem;
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
+  align-items: start;
 }
 
 /* Accordion */
@@ -1660,7 +1639,6 @@ html[data-theme="dark"] .theme-dark-logo {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 100%;
 }
 
 .faq-item {
@@ -1680,13 +1658,12 @@ html[data-theme="dark"] .theme-dark-logo {
   width: 100%;
   padding: 1.5rem;
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
   align-items: center;
   background: none;
   border: none;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-color);
@@ -1731,9 +1708,8 @@ html[data-theme="dark"] .theme-dark-logo {
   border-radius: 1.5rem;
   padding: 2rem;
   box-shadow: var(--shadow-lg);
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
+  position: sticky;
+  top: 100px;
 }
 
 .contact-card-content h3 {
@@ -1750,7 +1726,6 @@ html[data-theme="dark"] .theme-dark-logo {
 .location-details p {
   font-size: 0.95rem;
   color: var(--text-color);
-  text-align: center;
 }
 
 .map-container {

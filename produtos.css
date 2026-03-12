@@ -157,8 +157,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    text-align: center;
-    align-items: center;
 }
 
 .product-title {
@@ -179,9 +177,6 @@
 .product-features {
     list-style: none;
     margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .product-features li {
