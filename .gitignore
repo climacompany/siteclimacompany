@@ -1,0 +1,20 @@
+# Ambientes Virtuais
+.venv/
+env/
+venv/
+ENV/
+
+# Arquivos temporários e de cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.crdownload
+.DS_Store
+Thumbs.db
+
+# Logs e Dados temporários
+*.log
+dados_raspados*.json
+extracao_final_rinnai.json
+rinnai_catalog_dump.html
+rinnai_dom.html
