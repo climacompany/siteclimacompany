@@ -1,0 +1,28 @@
+[
+  {
+    "id": 201,
+    "destaque": true,
+    "categoria": "caldeiras",
+    "categoriaLabel": "Caldeiras",
+    "titulo": "Caldeira Mural Rinnai REU-B300 FEA",
+    "desc": "★ PRODUTO EM DESTAQUE ★ Caldeira mural REU-B300 FEA a gás de dupla função para suprimento de sistema de calefação (piso radiante, radiador, toalheiro) e água para uso sanitário. Alta tecnologia e eficiência energética incomparável para o máximo conforto.",
+    "features": [
+      "Bomba circuladora embutida",
+      "Vaso de expansão integrado",
+      "Trocador de calor duplo",
+      "Modulação de chama eletrônica"
+    ],
+    "especificacoesTecnicas": {
+      "Potência Nominal (Kcal/h)": "30.000",
+      "Rendimento Térmico": "92%",
+      "Tensão Elétrica": "220V",
+      "Prazo de Garantia": "3 Anos Oficial Rinnai",
+      "Dimensões (AxLxP)": "600 mm x 400 mm x 250 mm",
+      "Peso Líquido": "25 kg",
+      "Aplicações Comuns": "Piso Radiante / Radiador / Água Sanitária",
+      "Exaustão": "Forçada",
+      "Vazão de Água (Δt 20°C)": "21,5 L/min"
+    },
+    "img": "https://www.rinnai.com.br/content/uploads/banner/8e39747ed04020bf4555c18423b76d25.jpg"
+  }
+]

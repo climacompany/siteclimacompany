@@ -63,8 +63,61 @@ const ui = {
     bgLoaderText: document.getElementById('bg-loader-text'),
 
     themeToggle: document.getElementById('theme-toggle'),
-    navbar: document.getElementById('navbar')
+    navbar: document.getElementById('navbar'),
+    aboutTitle: document.querySelector('.section-title'), // Referência para Sobre Nós
+    aboutSubtitle: document.querySelector('.section-subtitle'),
+    aboutText: document.querySelector('.section-text')
 };
+
+async function loadTexts() {
+    try {
+        const response = await fetch('/dados/textos.json');
+        const data = await response.json();
+        
+        // Hero
+        if (data.hero) {
+            variants[0].name = data.hero.hero_title || variants[0].name;
+            variants[0].subtitle = data.hero.hero_subtitle || variants[0].subtitle;
+            variants[0].description = data.hero.hero_description || variants[0].description;
+        }
+
+        // Sobre Nós
+        if (data.sobre) {
+            const aboutSection = document.getElementById('sobre');
+            if (aboutSection) {
+                const title = aboutSection.querySelector('.section-title');
+                const subtitle = aboutSection.querySelector('.section-subtitle');
+                const text = aboutSection.querySelector('.section-text');
+                if (title) title.innerText = data.sobre.titulo;
+                if (subtitle) subtitle.innerText = data.sobre.subtitulo;
+                if (text) text.innerText = data.sobre.texto;
+            }
+        }
+
+        // Stats
+        if (data.stats) {
+            const counters = document.querySelectorAll('.stat-value');
+            counters.forEach(c => {
+                if (c.getAttribute('data-target') < 100) {
+                     c.setAttribute('data-target', data.stats.anos);
+                     const label = c.closest('.stat-item').querySelector('.stat-label');
+                     if (label) label.innerText = `${data.stats.anos} anos no mercado`;
+                } else {
+                     c.setAttribute('data-target', data.stats.projetos);
+                }
+            });
+        }
+
+        // WhatsApp
+        if (data.contatos) {
+            window.WHATSAPP_CONFIG = data.contatos;
+        }
+
+    } catch (e) {
+        console.error("Erro ao carregar textos.json", e);
+    }
+}
+
 
 const ctx = ui.canvas.getContext('2d');
 let scrollFrameIndex = 0;
@@ -497,6 +550,7 @@ const init = async () => {
         history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
+    await loadTexts();
     resizeCanvas();
     const variant = variants[currentVariantIndex];
 
