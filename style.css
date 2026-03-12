@@ -832,11 +832,15 @@ a {
   }
 
   .hero-actions-center {
-    position: static;
-    transform: none;
-    margin-top: 3rem;
-    width: 100%;
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+    width: max-content;
   }
 
   .cta-group {
