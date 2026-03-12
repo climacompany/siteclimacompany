@@ -1,0 +1,34 @@
+[
+    {
+        "titulo": "Sem Título",
+        "desc": "Descrição detalhada do produto.",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/8e39747ed04020bf4555c18423b76d25.jpg",
+        "features": [
+            "Idiomas\n\n\n\nPortuguês\t\t\t\t\t\t\t\t\t\t\t\t\t\n\n\n\nEnglish\t\t\t\t\t\t\t\t\t\t\t\t\t\n\n\n\nEspañol",
+            "Português",
+            "English",
+            "Español"
+        ],
+        "especificacoesTecnicas": {},
+        "id": 400,
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor",
+        "destaque": true
+    },
+    {
+        "titulo": "Sem Título",
+        "desc": "Descrição detalhada do produto.",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/8e39747ed04020bf4555c18423b76d25.jpg",
+        "features": [
+            "Idiomas\n\n\n\nPortuguês\t\t\t\t\t\t\t\t\t\t\t\t\t\n\n\n\nEnglish\t\t\t\t\t\t\t\t\t\t\t\t\t\n\n\n\nEspañol",
+            "Português",
+            "English",
+            "Español"
+        ],
+        "especificacoesTecnicas": {},
+        "id": 401,
+        "categoria": "caldeiras",
+        "categoriaLabel": "Caldeiras",
+        "destaque": false
+    }
+]

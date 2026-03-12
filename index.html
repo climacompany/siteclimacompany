@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima Company | Soluções em Climatização</title>
+
+  <!-- Fonts: Inter for a clean, modern aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="imagens/cc logo sem escrita com fundo.png">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading" class="loading-overlay">
+    <div class="loading-content">
+      <img src="imagens/logo.png" alt="Clima Company" class="brand-logo-img">
+      <div class="loading-bar-container">
+        <div id="loading-bar" class="loading-bar"></div>
+      </div>
+      <p id="loading-text">Carregando <span id="loading-percent">0</span>%</p>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header id="navbar" class="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="nav-brand"><img src="imagens/logo.png" alt="Clima Company" class="nav-logo-img"></a>
+
+      <nav class="nav-links">
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre Nós</a>
+        <a href="produtos.html" target="_blank">Produtos</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <div class="nav-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="display:none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="#contato" class="btn-primary nav-btn">Orçamento</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Parallax Container -->
+  <div id="scroll-proxy"></div> <!-- Invisible div to create scroll height equivalent to the frames -->
+
+  <section id="inicio" class="hero">
+    <canvas id="parallax-canvas"></canvas>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <!-- Left side: Text & CTAs -->
+      <div class="hero-text-block">
+        <p class="brand-subtitle">CLIMA COMPANY PRESENTA</p>
+        <div class="title-wrapper">
+          <h1 id="hero-title">CALDEIRA</h1>
+        </div>
+        <p id="hero-subtitle" class="subtitle">A GÁS</p>
+        <p id="hero-description" class="description">
+          Sistema de calefação de alta eficiência para residências e empresas. Conforto térmico em todos os ambientes,
+          com instalação profissional e garantia.
+        </p>
+        <div class="cta-group">
+          <a href="produtos.html" class="btn-cta btn-outline">PRODUTOS</a>
+          <a href="#contato" class="btn-cta btn-solid">FAZER ORÇAMENTO</a>
+        </div>
+        
+        <!-- Socials Moved to Flow -->
+        <div class="hero-social-flow">
+          <a href="https://wa.me/5512996812419" target="_blank" aria-label="WhatsApp"><svg width="20" height="20"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+              </path>
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg></a>
+        </div>
+      </div>
+
+      <!-- Center area is transparent for canvas visibility -->
+
+      <!-- Right side: Nav controls -->
+      <div class="hero-controls">
+        <span id="variant-index" class="large-index">01</span>
+        <div class="vertical-nav">
+          <button id="btn-prev" class="nav-arrow" aria-label="Anterior">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="divider"></div>
+          <button id="btn-next" class="nav-arrow" aria-label="Próximo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <!-- Tiny background loading indicator when switching -->
+        <div id="bg-loading-indicator" class="bg-loader">
+          <span class="spinner"></span> <span id="bg-loader-text"></span>
+        </div>
+      </div>
+
+      <!-- Bottom row: Socials (Removed to prevent absolute positioning overlap) -->
+    </div>
+  </section>
+
+  <!-- Standard Sections Placeholder for Parallax Scroll Follow-up -->
+  <main class="page-content">
+    <section id="sobre" class="section glass-section">
+      <div class="container servicos-container">
+        <div class="servicos-text">
+          <h2 class="section-title">Sobre Nós</h2>
+          <h3 class="section-subtitle">Sobre a Empresa</h3>
+          <p class="section-text">
+            A ClimaCompany é especializada em soluções de climatização, com foco em aquecimento residencial, industrial
+            e para projetos diversos. Atuamos há mais de 5 anos no mercado, oferecendo os melhores produtos e serviços
+            para nossos clientes.
+            <br><br>
+            Nossa equipe é formada por profissionais experientes e qualificados, prontos para atender suas necessidades
+            com excelência e dedicação. Contamos com assistência técnica autorizada.
+          </p>
+          <div class="quality-stamp mt-4" style="display: flex; justify-content: center; width: 100%;">
+            <img src="imagens/cc logo com escrita preta sem fundo.png" alt="Selo de Qualidade Clima Company"
+              class="servicos-logo theme-light-logo">
+            <img src="imagens/cc logo cor invertida com escrtita sem  fundo.png" alt="Selo de Qualidade Clima Company"
+              class="servicos-logo theme-dark-logo">
+          </div>
+
+          <!-- Estatísticas Sugeridas -->
+          <div class="stats-grid mt-5">
+            <div class="stat-item">
+              <div class="stat-header">
+                <span class="stat-label">5 anos no mercado</span>
+                <span class="stat-sublabel">Experiência e Qualidade</span>
+              </div>
+              <div class="stat-value-container">
+                <span class="stat-value" data-target="5">0</span><span class="stat-plus">+</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="stat-arrow">
+                  <path d="M7 7h10v10" />
+                  <path d="M7 17 17 7" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-header">
+                <span class="stat-label">Projetos realizados</span>
+                <span class="stat-sublabel">Com total assistência técnica</span>
+              </div>
+              <div class="stat-value-container">
+                <span class="stat-value" data-target="350">0</span><span class="stat-plus">+</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="stat-arrow">
+                  <path d="M7 7h10v10" />
+                  <path d="M7 17 17 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="servicos-image-wrapper">
+          <img src="imagens/MARCIO.jpg" alt="Marcio - Clima Company" class="animated-service-img">
+        </div>
+      </div>
+    </section>
+
+    <section id="produtos" class="section">
+      <div class="container">
+        <h2 class="section-title text-center">Nossos Produtos</h2>
+        <p class="section-subtitle text-center">Tecnologia de ponta e eficiência para o seu conforto térmico</p>
+
+        <ul class="glowing-grid">
+          <!-- Aquecedores a Gás -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-flame">
+                    <path
+                      d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.5 3.5 6.5 1 1.5 2 3 2 5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Aquecedores a Gás</h3>
+                  <p>Banho com temperatura constante e economia superior com tecnologia Rinnai.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Conhecer Linha <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Bombas de Calor -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-thermometer-sun">
+                    <path d="M12 9a4 4 0 0 0-2 7.5" />
+                    <path d="M12 3v2" />
+                    <path d="m6.6 6.6 1.4 1.4" />
+                    <path d="M20 12h-2" />
+                    <path d="m17.4 17.4-1.4-1.4" />
+                    <path d="M12 21v-2" />
+                    <path d="m8 16 1.4-1.4" />
+                    <path d="m16 8-1.4 1.4" />
+                    <path d="M14 12V3.5a2.5 2.5 0 0 0-5 0V12a3.5 3.5 0 1 0 7 0Z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Bombas de Calor</h3>
+                  <p>Aquecimento de piscinas e ambientes com alta performance e baixo consumo.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Ver Detalhes <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Caldeiras -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-settings">
+                    <path
+                      d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.72V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Caldeiras Mural</h3>
+                  <p>Solução completa para aquecimento de piso e água de consumo com silêncio e precisão.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Explorar Soluções <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Sistemas Solares -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-sun-medium">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 3v1" />
+                    <path d="m18.36 5.64-.7.7" />
+                    <path d="M21 12h-1" />
+                    <path d="m18.36 18.36-.7-.7" />
+                    <path d="M12 21v-1" />
+                    <path d="m5.64 18.36.7-.7" />
+                    <path d="M3 12h1" />
+                    <path d="m5.64 5.64.7-.7" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Sistemas Solares</h3>
+                  <p>Energia limpa e inesgotável para seu banho, reduzindo bruscamente sua conta de energia.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Saber Mais <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Bombas -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-droplets">
+                    <path
+                      d="M7 16.3c2.2 0 4-1.8 4-4 0-1.5-1.1-2.9-2.5-3.3a1.5 1.5 0 0 0-1.5 0c-1.4.4-2.5 1.8-2.5 3.3 0 2.2 1.8 4 4 4Z" />
+                    <path
+                      d="M17 16.3c2.2 0 4-1.8 4-4 0-1.5-1.1-2.9-2.5-3.3a1.5 1.5 0 0 0-1.5 0c-1.4.4-2.5 1.8-2.5 3.3 0 2.2 1.8 4 4 4Z" />
+                    <path
+                      d="M12 4.1a1 1 0 0 0-1 0c-1.4.4-2.5 1.8-2.5 3.3 0 2.2 1.8 4 4 4s4-1.8 4-4c0-1.5-1.1-2.9-2.5-3.3a1 1 0 0 0-1 0Z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Bombas Rowa</h3>
+                  <p>Aumente a pressão da sua rede hidráulica com as bombas mais silenciosas do mercado.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Ver Modelos <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Coletores Solares -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-grid-3x3">
+                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                    <path d="M3 9h18" />
+                    <path d="M3 15h18" />
+                    <path d="M9 3v18" />
+                    <path d="M15 3v18" />
+                  </svg>
+                </div>
+                <div>
+                  <h3>Coletores Solares</h3>
+                  <p>Placas de alta absorção para aquecimento eficiente de piscinas residenciais e coletivas.</p>
+                </div>
+                <a href="produtos.html" class="card-link">Conferir Opções <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+
+    <section id="servicos" class="section servicos-premium">
+      <div class="container">
+        <div class="servicos-header">
+          <div class="servicos-header-text">
+            <h2 class="section-title text-left">Nossos Serviços</h2>
+            <p class="section-description">
+              Oferecemos soluções completas em climatização, do projeto à instalação e manutenção,
+              garantindo o máximo conforto térmico para sua residência ou empresa.
+            </p>
+            <a href="#contato" class="btn-solid btn-orcamento">Fazer Orçamento</a>
+          </div>
+          <div class="servicos-header-image">
+            <div class="image-border-decoration">
+              <img src="imagens/radiador_premium.png" alt="Serviços de Climatização Premium">
+            </div>
+          </div>
+        </div>
+
+        <ul class="glowing-grid">
+          <!-- Venda e Instalação -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <img src="nossos serviços/1.png" alt="Venda e Instalação">
+                </div>
+                <div>
+                  <h3>Venda e Instalação</h3>
+                  <p>Aquecedores a gás, solar e elétrico. Instalação profissional com garantia técnica.</p>
+                </div>
+                <a href="#contato" class="card-link">Solicitar Orçamento <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Calefação -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <img src="nossos serviços/2-1.png" alt="Sistema de Calefação">
+                </div>
+                <div>
+                  <h3>Sistema de Calefação</h3>
+                  <p>Projetos completos de aquecimento de ambientes para máximo conforto térmico.</p>
+                </div>
+                <a href="#contato" class="card-link">Ver Projetos <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Pressurização -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <img src="nossos serviços/3-1.png" alt="Bombas de pressurização">
+                </div>
+                <div>
+                  <h3>Bombas de pressurização</h3>
+                  <p>Sistemas para garantir o fluxo ideal de água em sua residência ou empresa.</p>
+                </div>
+                <a href="#contato" class="card-link">Saiba Mais <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Manutenção -->
+          <li class="glowing-card-wrapper">
+            <div class="glowing-card">
+              <div class="glow-layer"></div>
+              <div class="card-content">
+                <div class="card-icon-box">
+                  <img src="nossos serviços/4-1.png" alt="Conserto e Manutenção">
+                </div>
+                <div>
+                  <h3>Conserto e Manutenção</h3>
+                  <p>Manutenção preventiva e corretiva garantindo durabilidade e economia.</p>
+                </div>
+                <a href="#contato" class="card-link">Agendar Visita <span>&rarr;</span></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="marcas" class="section glass-section marcas-carousel-section">
+      <div class="container container-marcas">
+        <h2 class="title-marcas text-center"
+          style="color: #004B63; font-weight: 800; font-size: 2.5rem; margin-bottom: 2rem;">Marcas</h2>
+
+        <div class="marcas-slider marquee-wrapper">
+          <div class="marcas-track-container marquee-track-container">
+            <div id="marcas-track" class="marcas-track animate-marquee">
+              <div class="marca-item"><img src="marcas/1-150x150.png" alt="Marca 1"></div>
+              <div class="marca-item"><img src="marcas/rinnai.png" alt="Rinnai"></div>
+              <div class="marca-item"><img src="marcas/2-150x150.png" alt="Marca 3"></div>
+              <div class="marca-item"><img src="marcas/12-2-150x150.png" alt="Marca 2"></div>
+              <div class="marca-item"><img src="marcas/3-150x150.png" alt="Marca 4"></div>
+              <div class="marca-item"><img src="marcas/4-150x150.png" alt="Marca 5"></div>
+            </div>
+          </div>
+          <div class="marquee-gradient-left"></div>
+          <div class="marquee-gradient-right"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="depoimentos" class="depoimentos-marquee">
+      <div class="container">
+        <h2 class="section-title text-center">Depoimentos</h2>
+        <p class="section-subtitle text-center">O que nossos clientes dizem no Google</p>
+
+        <div class="marquee-wrapper">
+          <div class="marquee-track-container">
+            <div class="testimonials-grid animate-marquee">
+              <!-- Avaliações serão inseridas via JS duplicadas -->
+            </div>
+          </div>
+          <div class="marquee-gradient-left"></div>
+          <div class="marquee-gradient-right"></div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="https://www.google.com/search?q=Clima+Company+Campos+do+Jordão+avaliações" target="_blank"
+            class="btn-outline">Ver todas no Google</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section glass-section">
+      <div class="container">
+        <h2 class="section-title text-center">FAQ & Localização</h2>
+        <p class="section-subtitle text-center">Tire suas dúvidas e saiba como chegar até nós</p>
+
+        <div class="faq-grid mt-5">
+          <!-- Coluna 1: Acordeão de Perguntas -->
+          <div class="faq-accordion">
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Quais marcas vocês trabalham?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Somos revendedores e assistência técnica autorizada de marcas líderes como Rinnai, Rowa, entre
+                  outras referências no mercado de climatização e aquecimento.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Vocês fazem instalação em outras cidades?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Sim! Atendemos Campos do Jordão e toda a região da Serra da Mantiqueira e Vale do
+                  Paraíba. Entre em contato para consultar disponibilidade, pois o atendimento depende da nossa
+                  disponibilidade técnica.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Como funciona a garantia dos serviços?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Todos os nossos serviços de instalação e manutenção seguem rigorosamente os padrões dos
+                  fabricantes, garantindo a validade da garantia original do produto e a segurança da sua
+                  instalação.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna 2: Contato e Mapa -->
+          <div class="faq-info-card">
+            <div class="contact-card-content">
+              <h3>Fale Conosco</h3>
+              <p>Envie sua dúvida ou agende uma visita técnica pelo WhatsApp.</p>
+              <a href="https://wa.me/5512996812419" target="_blank" class="btn-solid btn-full mt-3">
+                Conversar no WhatsApp
+              </a>
+              <div class="location-details mt-4">
+                <p><strong>Endereço:</strong><br>
+                  Av. Dr. Januário Miraglia, 2692 – V. Telma,<br>
+                  Campos do Jordão – SP
+                </p>
+              </div>
+            </div>
+            <div class="map-container mt-3">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.123456789!2d-45.5849!3d-22.7234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ccbe962e78347d%3A0xe5a36329a27eb27!2sAv.%20Dr.%20Janu%C3%A1rio%20Miraglia%2C%202692%20-%20Vila%20Telma%2C%20Campos%20do%20Jord%C3%A3o%20-%20SP%2C%2012460-000!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+                width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Botão WhatsApp Flutuante -->
+  <a href="https://wa.me/5512996812419" target="_blank" id="wa-float" class="wa-float"
+    aria-label="Fale conosco pelo WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+      </path>
+    </svg>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3 class="footer-brand">CLIMA COMPANY</h3>
+        <p>Soluções completas em climatização.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/5512996812419" aria-label="WhatsApp">Whatsapp</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Unidades</h4>
+        <p><strong>Campos do Jordão:</strong><br>Av. Dr. Januário Miraglia, 2692 – V. Telma, Campos do Jordão – SP</p>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="#sobre">Sobre Nós</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Clima Company. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

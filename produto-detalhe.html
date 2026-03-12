@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto | Clima Company</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="produtos.css">
+    <link rel="stylesheet" href="produto-detalhe.css">
+    <link rel="icon" type="image/png" href="imagens/cc logo sem escrita com fundo.png">
+
+    <!-- Carrega a base de dados em produtos.js primeiro -->
+    <script src="produtos.js?v=1.2" defer></script>
+    <script src="produto-detalhe.js?v=1.2" defer></script>
+</head>
+
+<body>
+    <!-- Navbar Simples -->
+    <header id="navbar" class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand"><img src="imagens/logo.png" alt="Clima Company"
+                    class="nav-logo-img"></a>
+
+            <nav class="nav-links">
+                <a href="produtos.html">Voltar para Produtos</a>
+            </nav>
+
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" style="display:none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="https://wa.me/5512996812419" target="_blank" class="btn-primary nav-btn">Orçamento</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-detail-page">
+        <!-- Espaço para injetar dinamicamente o produto -->
+        <div id="product-detail-container" class="container" style="padding-top: 120px; padding-bottom: 60px;">
+            <!-- Carregando state -->
+            <div style="text-align: center; padding: 4rem;">
+                <div class="spinner"
+                    style="border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--color-brand-accent); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto;">
+                </div>
+                <p style="margin-top: 1rem;">Carregando detalhes do produto...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3 class="footer-brand">CLIMA COMPANY</h3>
+                <p>Soluções completas em climatização.</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/5512996812419" aria-label="WhatsApp" target="_blank">Whatsapp</a>
+                    <a href="#" aria-label="Instagram">Instagram</a>
+                    <a href="#" aria-label="Facebook">Facebook</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Unidades</h4>
+                <p><strong>Campos do Jordão:</strong><br>Av. Dr. Januário Miraglia, 2692 – V. Telma, Campos do Jordão –
+                    SP</p>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="index.html#sobre">Sobre Nós</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Clima Company. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

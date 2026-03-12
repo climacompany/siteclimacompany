@@ -1,0 +1,45 @@
+backend:
+  name: github
+  # IMPORTANTE: Altere "seu-usuario/seu-repositorio" pelo nome do seu repositório no GitHub (ex: ClimaCompany/site)
+  repo: climacompany/siteclimacompany
+  branch: main # ou master, dependendo de como estiver no seu GitHub
+
+# Como o Sveltia vai lidar com imagens base e uploads
+media_folder: "imagens"
+public_folder: "imagens"
+
+# Coleções de dados que você poderá editar
+collections:
+  - name: "configuracoes"
+    label: "Textos do Site"
+    files:
+      - file: "dados/textos.json"
+        label: "Página Inicial"
+        name: "home"
+        fields:
+          - {label: "Título Principal (Hero)", name: "hero_title", widget: "string"}
+          - {label: "Subtítulo (Hero)", name: "hero_subtitle", widget: "string"}
+          - {label: "Descrição (Hero)", name: "hero_description", widget: "text"}
+          - {label: "Número do WhatsApp Atendimento", name: "whatsapp_number", widget: "string"}
+          - {label: "Mensagem Padrão WhatsApp", name: "whatsapp_message", widget: "string"}
+
+  - name: "produtos"
+    label: "Catálogo de Produtos"
+    folder: "dados/produtos" # Os produtos individuais serão salvos aqui
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    fields:
+      - {label: "Título do Produto", name: "titulo", widget: "string"}
+      - label: "Categoria"
+        name: "categoria"
+        widget: "select"
+        options: ["caldeiras", "solar", "aquecedores", "bombas_pressurizacao", "acessorios"]
+      - {label: "Nome Visível da Categoria", name: "categoriaLabel", widget: "string"}
+      - {label: "Descrição Curta", name: "desc", widget: "text"}
+      - {label: "Imagem do Produto", name: "img", widget: "image"}
+      - label: "Características Especiais (Lista)"
+        name: "features"
+        widget: "list"
+        summary: '{{fields.feature}}'
+        field: {label: "Característica", name: "feature", widget: "string"}

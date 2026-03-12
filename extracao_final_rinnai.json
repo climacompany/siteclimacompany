@@ -1,0 +1,32 @@
+[
+    {
+        "id": 800,
+        "titulo": "Aquecedor a gás",
+        "desc": "Indicado para residências e imóveis com maior demanda de água quente. Oferece banhos contínuos, temperatura estável e eficiência energética, sendo ideal para quem busca desempenho, economia no uso diário e conforto em um ou vários pontos de consumo.",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [],
+        "especificacoesTecnicas": {},
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor"
+    },
+    {
+        "id": 801,
+        "titulo": "Aquecedor a gás",
+        "desc": "Olá, somos o canal de relacionamento da Rinnai Brasil! Por favor preencha os campos abaixo para começarmos seu atendimento!",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [],
+        "especificacoesTecnicas": {},
+        "categoria": "caldeiras",
+        "categoriaLabel": "Caldeiras"
+    },
+    {
+        "id": 802,
+        "titulo": "Aquecedor a gás",
+        "desc": "Olá, somos o canal de relacionamento da Rinnai Brasil! Por favor preencha os campos abaixo para começarmos seu atendimento!",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [],
+        "especificacoesTecnicas": {},
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor"
+    }
+]
