@@ -1,0 +1,75 @@
+backend:
+  name: github
+  # IMPORTANTE: Altere "seu-usuario/seu-repositorio" pelo nome do seu repositório no GitHub (ex: ClimaCompany/site)
+  repo: climacompany/siteclimacompany
+  branch: main # ou master, dependendo de como estiver no seu GitHub
+
+# Como o Sveltia vai lidar com imagens base e uploads
+media_folder: "imagens"
+public_folder: "imagens"
+
+# Coleções de dados que você poderá editar
+collections:
+  - name: "configuracoes"
+    label: "Textos do Site"
+    files:
+      - file: "dados/textos.json"
+        label: "Conteúdo Geral"
+        name: "geral"
+        fields:
+          - label: "Hero (Primeira Seção)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "hero_title", widget: "string"}
+              - {label: "Subtítulo", name: "hero_subtitle", widget: "string"}
+              - {label: "Descrição", name: "hero_description", widget: "text"}
+          
+          - label: "Sobre Nós"
+            name: "sobre"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "titulo", widget: "string"}
+              - {label: "Subtítulo", name: "subtitulo", widget: "string"}
+              - {label: "Texto", name: "texto", widget: "text"}
+          
+          - label: "Estatísticas"
+            name: "stats"
+            widget: "object"
+            fields:
+              - {label: "Anos no Mercado", name: "anos", widget: "number"}
+              - {label: "Projetos Realizados", name: "projetos", widget: "number"}
+
+          - label: "Contatos"
+            name: "contatos"
+            widget: "object"
+            fields:
+              - {label: "WhatsApp (Apenas números)", name: "whatsapp_number", widget: "string"}
+              - {label: "Mensagem Padrão", name: "whatsapp_message", widget: "string"}
+
+  - name: "produtos_col"
+    label: "Catálogo de Produtos"
+    files:
+      - file: "dados/produtos.json"
+        label: "Todos os Produtos"
+        name: "lista"
+        fields:
+          - label: "Produtos"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Destaque", name: "destaque", widget: "boolean", default: false}
+              - {label: "Título", name: "titulo", widget: "string"}
+              - label: "Categoria"
+                name: "categoria"
+                widget: "select"
+                options: ["caldeiras", "solar", "aquecedores", "bombas_pressurizacao", "acessorios"]
+              - {label: "Rótulo Categoria", name: "categoriaLabel", widget: "string"}
+              - {label: "Descrição", name: "desc", widget: "text"}
+              - {label: "Imagem", name: "img", widget: "image"}
+              - label: "Características"
+                name: "features"
+                widget: "list"
+                field: {label: "Item", name: "item", widget: "string"}
+

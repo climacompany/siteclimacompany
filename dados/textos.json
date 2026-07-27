@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "hero_title": "CALDEIRA",
+    "hero_subtitle": "A GÁS",
+    "hero_description": "Sistema de calefação de alta eficiência para residências e empresas. Conforto térmico em todos os ambientes, com instalação profissional e garantia."
+  },
+  "sobre": {
+    "titulo": "Sobre Nós",
+    "subtitulo": "Sobre a Empresa",
+    "texto": "A ClimaCompany é especializada em soluções de climatização, com foco em aquecimento residencial, industrial e para projetos diversos. Atuamos há mais de 5 anos no mercado, oferecendo os melhores produtos e serviços para nossos clientes.\n\nNossa equipe é formada por profissionais experientes e qualificados, prontos para atender suas necessidades com excelência e dedicação. Contamos com assistência técnica autorizada."
+  },
+  "stats": {
+    "anos": 5,
+    "projetos": 350
+  },
+  "contatos": {
+    "whatsapp_number": "5512996812419",
+    "whatsapp_message": "Olá! Gostaria de saber mais sobre os sistemas de aquecimento."
+  }
+}
