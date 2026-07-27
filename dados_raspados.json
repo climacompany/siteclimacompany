@@ -1,0 +1,22 @@
+[
+    {
+        "titulo": "Título Não Encontrado",
+        "img": "",
+        "desc": "Descrição detalhada não identificada na página.",
+        "features": [],
+        "especificacoesTecnicas": {},
+        "id": 1000,
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor"
+    },
+    {
+        "titulo": "Título Não Encontrado",
+        "img": "",
+        "desc": "Descrição detalhada não identificada na página.",
+        "features": [],
+        "especificacoesTecnicas": {},
+        "id": 1001,
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor"
+    }
+]

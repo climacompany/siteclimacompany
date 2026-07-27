@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paleta — Clima Company</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:      #193BA1;
+    --blue-light:#2E56C8;
+    --blue-dark: #0F2470;
+    --warm:      #564D4A;
+    --warm-light:#7A706C;
+    --warm-dark: #352E2C;
+    --cream:     #F7F4F3;
+    --cream-dark:#EAE5E2;
+    --cream-deep:#D6CFC9;
+    --white:     #FFFFFF;
+    --text:      #1A1614;
+  }
+
+  body {
+    background: #F0EDE9;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 48px 32px;
+  }
+
+  header {
+    max-width: 900px;
+    margin: 0 auto 56px;
+  }
+
+  header p.label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-light);
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--blue-dark);
+    line-height: 1.1;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--warm);
+  }
+
+  /* ── SWATCHES PRINCIPAIS ── */
+  .section-title {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-light);
+  }
+
+  .swatches-grid {
+    max-width: 900px;
+    margin: 0 auto 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .swatch {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(25,59,161,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .swatch:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(25,59,161,0.16);
+  }
+
+  .swatch-block {
+    height: 120px;
+    width: 100%;
+    position: relative;
+  }
+
+  .swatch-block::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .swatch-info {
+    background: white;
+    padding: 14px 16px;
+  }
+
+  .swatch-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .swatch-hex {
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    color: var(--warm-light);
+    margin-bottom: 4px;
+  }
+
+  .swatch-role {
+    font-size: 10.5px;
+    color: #999;
+    letter-spacing: 0.05em;
+  }
+
+  .copied-toast {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .swatch.flash .copied-toast { opacity: 1; }
+
+  /* ── ESCALA EXPANDIDA ── */
+  .scale-grid {
+    max-width: 900px;
+    margin: 0 auto 56px;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 8px;
+  }
+
+  .scale-chip {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: transform 0.15s;
+    cursor: pointer;
+  }
+
+  .scale-chip:hover { transform: scale(1.06); }
+
+  .scale-chip-block { height: 64px; }
+
+  .scale-chip-label {
+    background: white;
+    padding: 6px 4px;
+    text-align: center;
+  }
+
+  .scale-chip-label span {
+    display: block;
+    font-size: 9px;
+    font-family: 'Courier New', monospace;
+    color: #aaa;
+  }
+
+  .scale-chip-label strong {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  /* ── PREVIEW DE USO ── */
+  .preview-grid {
+    max-width: 900px;
+    margin: 0 auto 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .preview-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(25,59,161,0.10);
+  }
+
+  /* Card Dark */
+  .card-dark {
+    background: var(--blue-dark);
+    padding: 32px;
+    color: var(--cream);
+  }
+
+  .card-dark .tag {
+    display: inline-block;
+    background: rgba(247,244,243,0.12);
+    border: 1px solid rgba(247,244,243,0.2);
+    color: var(--cream);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .card-dark h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .card-dark p {
+    font-size: 13px;
+    color: rgba(247,244,243,0.65);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cream);
+    color: var(--blue-dark);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: 1px solid rgba(247,244,243,0.35);
+    cursor: pointer;
+  }
+
+  /* Card Light */
+  .card-light {
+    background: var(--cream);
+    padding: 32px;
+  }
+
+  .card-light .tag {
+    display: inline-block;
+    background: rgba(25,59,161,0.08);
+    border: 1px solid rgba(25,59,161,0.15);
+    color: var(--blue);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .card-light h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: var(--blue-dark);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .card-light p {
+    font-size: 13px;
+    color: var(--warm);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .btn-blue {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+
+  .btn-warm {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: var(--warm);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: 1px solid var(--cream-deep);
+    cursor: pointer;
+  }
+
+  /* ── GRADIENTES ── */
+  .gradients-grid {
+    max-width: 900px;
+    margin: 0 auto 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .gradient-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .gradient-card:hover { transform: translateY(-3px); }
+
+  .gradient-block { height: 100px; }
+
+  .gradient-info {
+    background: white;
+    padding: 12px 14px;
+  }
+
+  .gradient-info strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .gradient-info span {
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    color: #aaa;
+  }
+
+  /* ── TIPOGRAFIA ── */
+  .type-preview {
+    max-width: 900px;
+    margin: 0 auto 56px;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 24px rgba(25,59,161,0.07);
+  }
+
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .type-row:last-child { border-bottom: none; }
+
+  .type-meta {
+    width: 140px;
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #bbb;
+  }
+
+  .type-sample { flex: 1; }
+
+  footer-note {
+    display: block;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-top: 40px;
+    border-top: 1px solid var(--cream-dark);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="label">Identidade Visual · 2025</p>
+  <h1>Paleta<br><em>Clima Company</em></h1>
+</header>
+
+<!-- CORES PRINCIPAIS -->
+<p class="section-title">Cores Principais</p>
+<div class="swatches-grid">
+
+  <div class="swatch" onclick="copyHex(this, '#193BA1')">
+    <div class="swatch-block" style="background:#193BA1;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Azul Principal</div>
+      <div class="swatch-hex">#193BA1</div>
+      <div class="swatch-role">Primária · CTAs · Destaque</div>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="swatch" onclick="copyHex(this, '#564D4A')">
+    <div class="swatch-block" style="background:#564D4A;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Cinza Quente</div>
+      <div class="swatch-hex">#564D4A</div>
+      <div class="swatch-role">Secundária · Texto de apoio</div>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="swatch" onclick="copyHex(this, '#F7F4F3')">
+    <div class="swatch-block" style="background:#F7F4F3; border: 1px solid #E8E3E0;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Creme</div>
+      <div class="swatch-hex">#F7F4F3</div>
+      <div class="swatch-role">Background · Superfícies claras</div>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+</div>
+
+<!-- ESCALA COMPLETA -->
+<p class="section-title">Escala de Tons — Azul</p>
+<div class="scale-grid" id="blue-scale"></div>
+
+<p class="section-title" style="margin-top:32px;">Escala de Tons — Cinza Quente</p>
+<div class="scale-grid" id="warm-scale"></div>
+
+<!-- GRADIENTES -->
+<p class="section-title" style="margin-top:48px;">Gradientes</p>
+<div class="gradients-grid">
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#0F2470,#193BA1)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#0F2470,#193BA1);"></div>
+    <div class="gradient-info">
+      <strong>Azul Profundo</strong>
+      <span>#0F2470 → #193BA1</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#193BA1,#2E56C8)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#193BA1,#2E56C8);"></div>
+    <div class="gradient-info">
+      <strong>Azul Brilhante</strong>
+      <span>#193BA1 → #2E56C8</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#193BA1,#564D4A)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#193BA1,#564D4A);"></div>
+    <div class="gradient-info">
+      <strong>Azul → Quente</strong>
+      <span>#193BA1 → #564D4A</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#352E2C,#564D4A)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#352E2C,#564D4A);"></div>
+    <div class="gradient-info">
+      <strong>Cinza Escuro</strong>
+      <span>#352E2C → #564D4A</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#F7F4F3,#EAE5E2)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#F7F4F3,#EAE5E2);"></div>
+    <div class="gradient-info">
+      <strong>Creme Suave</strong>
+      <span>#F7F4F3 → #EAE5E2</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+  <div class="gradient-card" onclick="copyHex(this, 'linear-gradient(135deg,#0F2470,#564D4A,#F7F4F3)')">
+    <div class="gradient-block" style="background:linear-gradient(135deg,#0F2470,#564D4A,#F7F4F3);"></div>
+    <div class="gradient-info">
+      <strong>Tricolor Marca</strong>
+      <span>#0F2470 → #564D4A → #F7F4F3</span>
+    </div>
+    <div class="copied-toast">Copiado!</div>
+  </div>
+
+</div>
+
+<!-- PREVIEW DE USO -->
+<p class="section-title">Preview de Uso</p>
+<div class="preview-grid">
+
+  <div class="preview-card">
+    <div class="card-dark">
+      <span class="tag">Clima Company</span>
+      <h2>Conforto<br>Térmico Real</h2>
+      <p>Instalação e manutenção de aquecedores, bombas de calor e sistemas solares com atendimento 24h.</p>
+      <button class="btn-primary">Orçamento</button>
+      <button class="btn-outline">Ver Serviços</button>
+    </div>
+  </div>
+
+  <div class="preview-card">
+    <div class="card-light">
+      <span class="tag">Clima Company</span>
+      <h2>Conforto<br>Térmico Real</h2>
+      <p>Instalação e manutenção de aquecedores, bombas de calor e sistemas solares com atendimento 24h.</p>
+      <button class="btn-blue">Orçamento</button>
+      <button class="btn-warm">Ver Serviços</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- TIPOGRAFIA -->
+<p class="section-title">Tipografia com a Paleta</p>
+<div class="type-preview">
+
+  <div class="type-row">
+    <div class="type-meta">Display / H1</div>
+    <div class="type-sample">
+      <span style="font-family:'DM Serif Display',serif; font-size:2.4rem; color:#0F2470; line-height:1.1;">Aquecimento Premium</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Heading / H2</div>
+    <div class="type-sample">
+      <span style="font-family:'DM Serif Display',serif; font-size:1.6rem; color:#193BA1; font-style:italic;">Soluções em Climatização</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Subtítulo</div>
+    <div class="type-sample">
+      <span style="font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#564D4A;">Instalação · Manutenção · Suporte 24h</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Corpo</div>
+    <div class="type-sample">
+      <span style="font-family:'DM Sans',sans-serif; font-size:0.95rem; color:#7A706C; line-height:1.75;">Atuamos há mais de 5 anos no mercado oferecendo os melhores produtos e serviços em aquecimento residencial e industrial.</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Label / Tag</div>
+    <div class="type-sample">
+      <span style="font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#2E56C8; background:rgba(25,59,161,0.08); padding:4px 12px; border-radius:20px;">Revendedora Oficial Rinnai</span>
+    </div>
+  </div>
+
+</div>
+
+<footer-note>Clique em qualquer swatch ou gradiente para copiar o hex · Clima Company © 2025</footer-note>
+
+<script>
+  // Blue scale
+  const blueShades = [
+    { name:'950', hex:'#060E2E' },
+    { name:'900', hex:'#0A1848' },
+    { name:'800', hex:'#0F2470' },
+    { name:'700', hex:'#152E8A' },
+    { name:'600', hex:'#193BA1' },
+    { name:'500', hex:'#2E56C8' },
+    { name:'400', hex:'#5278D6' },
+    { name:'300', hex:'#8AA4E6' },
+    { name:'200', hex:'#C4D1F5' },
+  ];
+
+  const warmShades = [
+    { name:'950', hex:'#1A1311' },
+    { name:'900', hex:'#231E1B' },
+    { name:'800', hex:'#352E2C' },
+    { name:'700', hex:'#453D3A' },
+    { name:'600', hex:'#564D4A' },
+    { name:'500', hex:'#7A706C' },
+    { name:'400', hex:'#9C9390' },
+    { name:'300', hex:'#BEB7B4' },
+    { name:'200', hex:'#E0DBD9' },
+  ];
+
+  function renderScale(id, shades) {
+    const grid = document.getElementById(id);
+    shades.forEach(s => {
+      const chip = document.createElement('div');
+      chip.className = 'scale-chip';
+      chip.onclick = () => copyHex(chip, s.hex);
+      chip.innerHTML = `
+        <div class="scale-chip-block" style="background:${s.hex};"></div>
+        <div class="scale-chip-label">
+          <strong>${s.name}</strong>
+          <span>${s.hex}</span>
+        </div>
+        <div class="copied-toast">✓</div>
+      `;
+      grid.appendChild(chip);
+    });
+  }
+
+  renderScale('blue-scale', blueShades);
+  renderScale('warm-scale', warmShades);
+
+  function copyHex(el, hex) {
+    navigator.clipboard.writeText(hex).catch(() => {});
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 1200);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+[
+    {
+        "id": 500,
+        "titulo": "",
+        "desc": "Olá, somos o canal de relacionamento da Rinnai Brasil! Por favor preencha os campos abaixo para começarmos seu atendimento!",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [
+            "Dimensionamento",
+            "Portal",
+            "Produtos",
+            "Aquecedores a gás"
+        ],
+        "especificacoesTecnicas": {},
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor",
+        "destaque": true
+    },
+    {
+        "id": 501,
+        "titulo": "",
+        "desc": "Olá, somos o canal de relacionamento da Rinnai Brasil! Por favor preencha os campos abaixo para começarmos seu atendimento!",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [
+            "Dimensionamento",
+            "Portal",
+            "Produtos",
+            "Aquecedores a gás"
+        ],
+        "especificacoesTecnicas": {},
+        "categoria": "caldeiras",
+        "categoriaLabel": "Caldeiras",
+        "destaque": false
+    },
+    {
+        "id": 502,
+        "titulo": "",
+        "desc": "Olá, somos o canal de relacionamento da Rinnai Brasil! Por favor preencha os campos abaixo para começarmos seu atendimento!",
+        "img": "https://www.rinnai.com.br/content/uploads/banner/c509f0bbae9945af524e7e9ea0bb1de3.jpg",
+        "features": [
+            "Dimensionamento",
+            "Portal",
+            "Produtos",
+            "Aquecedores a gás"
+        ],
+        "especificacoesTecnicas": {},
+        "categoria": "aquecedores",
+        "categoriaLabel": "Aquecedor",
+        "destaque": false
+    }
+]
