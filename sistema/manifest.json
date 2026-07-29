@@ -1,0 +1,13 @@
+{
+  "name": "Clima Company - Controle de Atendimento",
+  "short_name": "Clima Company",
+  "start_url": "/sistema/",
+  "scope": "/sistema/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/sistema/favicon.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/sistema/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
