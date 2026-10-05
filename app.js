@@ -135,81 +135,88 @@ const getFramePath = (variant, index) => {
 
 // Canvas Resizing
 const resizeCanvas = () => {
-    // 4K Internal Resolution (3840 x 2160) for sharpest rendering
-    ui.canvas.width = 3840;
-    ui.canvas.height = 2160;
+    // Mesma resolução dos quadros (1280px): desenhar em 4K não deixava a imagem mais nítida,
+    // só pesava no celular. O CSS (object-fit: cover) ajusta o canvas à tela.
+    ui.canvas.width = 1280;
+    ui.canvas.height = 720;
     renderFrame(scrollFrameIndex); // re-render current frame on resize
 };
 window.addEventListener('resize', resizeCanvas);
 
 
 // --- 3. PRELOADING SYSTEM ---
-const preloadImages = (variantIndex, isBackgroundLoad = false) => {
-    return new Promise((resolve) => {
-        const variant = variants[variantIndex];
+// Os quadros carregam aos poucos, "do grosso para o fino": primeiro o quadro inicial (a página
+// já aparece), depois quadros espalhados pela animação e por fim os intermediários. Enquanto
+// isso, a animação mostra o quadro carregado mais próximo.
+// No celular ou em conexão lenta, só metade dos quadros é baixada.
+const connection = navigator.connection || {};
+const isLiteMode = window.matchMedia('(max-width: 767px)').matches ||
+    connection.saveData === true ||
+    /2g|3g/.test(connection.effectiveType || '');
+const FRAME_STEP = isLiteMode ? 2 : 1;
+const MAX_PARALLEL_LOADS = 6;
 
-        // If already loaded in cache, just resolve
-        if (loadedImagesCache[variant.folder] && loadedImagesCache[variant.folder].length === variant.frameCount) {
-            resolve();
-            return;
-        }
+const frameLoaders = {}; // { "folder": { queue: [indices], inFlight, firstFrame: Promise } }
+let activeLoaderFolder = null;
 
-        const images = [];
-        let loadedCount = 0;
+// Quantas vezes p é divisível por 2: define a "camada" do quadro na ordem de carregamento
+const loadPriority = (p) => (p === 0 ? Infinity : Math.log2(p & -p));
 
-        if (isBackgroundLoad) {
-            ui.bgLoader.classList.add('active');
-            ui.btnPrev.style.pointerEvents = 'none';
-            ui.btnNext.style.pointerEvents = 'none';
-        } else {
-            ui.loading.classList.remove('hidden');
-        }
+const getLoadOrder = (frameCount) => {
+    const positions = [];
+    for (let p = 0; p * FRAME_STEP < frameCount; p++) positions.push(p);
+    positions.sort((a, b) => loadPriority(b) - loadPriority(a) || a - b);
+    return positions.map(p => p * FRAME_STEP);
+};
 
-        for (let i = 0; i < variant.frameCount; i++) {
-            const img = new Image();
-            img.src = getFramePath(variant, i);
+const pumpFrameQueue = () => {
+    const folder = activeLoaderFolder;
+    const loader = frameLoaders[folder];
+    const variant = variants.find(v => v.folder === folder);
 
-            img.onload = () => {
-                loadedCount++;
-                images[i] = img;
+    while (loader.inFlight < MAX_PARALLEL_LOADS && loader.queue.length) {
+        const index = loader.queue.shift();
+        const img = new Image();
+        img.decoding = 'async';
+        loader.inFlight++;
 
-                // Update UI
-                if (!isBackgroundLoad) {
-                    const percent = Math.floor((loadedCount / variant.frameCount) * 100);
-                    ui.loadingPercent.textContent = percent;
-                    ui.loadingBar.style.width = `${percent}%`;
-                }
+        const finish = () => {
+            loader.inFlight--;
+            if (index === 0) loader.resolveFirstFrame();
+            // Só continua baixando se este ainda for o produto exibido
+            if (activeLoaderFolder === folder) pumpFrameQueue();
+        };
 
-                if (loadedCount === variant.frameCount) {
-                    loadedImagesCache[variant.folder] = images;
+        img.onload = () => {
+            loadedImagesCache[folder][index] = img;
+            if (variants[currentVariantIndex].folder === folder) scheduleRender();
+            finish();
+        };
+        img.onerror = finish;
+        img.src = getFramePath(variant, index);
+    }
+};
 
-                    if (isBackgroundLoad) {
-                        ui.bgLoader.classList.remove('active');
-                        ui.btnPrev.style.pointerEvents = 'auto';
-                        ui.btnNext.style.pointerEvents = 'auto';
-                    } else {
-                        // Give 500ms before hiding the overlay for smoothness
-                        setTimeout(() => {
-                            ui.loading.classList.add('hidden');
-                        }, 500);
-                    }
-                    resolve();
-                }
-            };
+// Começa (ou retoma) o carregamento de um produto; resolve quando o primeiro quadro está pronto
+const loadVariantFrames = (variantIndex) => {
+    const variant = variants[variantIndex];
+    const folder = variant.folder;
 
-            img.onerror = () => {
-                // Fallback or skip if frame doesn't exist
-                loadedCount++;
-                images[i] = images[i - 1] || new Image(); // duplicate prev if error
-                if (loadedCount === variant.frameCount) {
-                    loadedImagesCache[variant.folder] = images;
-                    if (isBackgroundLoad) ui.bgLoader.classList.remove('active');
-                    else ui.loading.classList.add('hidden');
-                    resolve();
-                }
-            };
-        }
-    });
+    if (!frameLoaders[folder]) {
+        let resolveFirstFrame;
+        const firstFrame = new Promise(resolve => { resolveFirstFrame = resolve; });
+        loadedImagesCache[folder] = [];
+        frameLoaders[folder] = {
+            queue: getLoadOrder(variant.frameCount),
+            inFlight: 0,
+            firstFrame,
+            resolveFirstFrame
+        };
+    }
+
+    activeLoaderFolder = folder;
+    pumpFrameQueue();
+    return frameLoaders[folder].firstFrame;
 };
 
 
@@ -218,9 +225,14 @@ const renderFrame = (index) => {
     const variant = variants[currentVariantIndex];
     const images = loadedImagesCache[variant.folder];
 
-    if (!images || !images[index]) return;
+    if (!images) return;
 
-    const img = images[index];
+    // Usa o quadro pedido ou, se ainda não carregou, o mais próximo já disponível
+    let img = images[index];
+    for (let d = 1; !img && d < variant.frameCount; d++) {
+        img = images[index - d] || images[index + d];
+    }
+    if (!img) return;
 
     // Clear canvas
     ctx.clearRect(0, 0, ui.canvas.width, ui.canvas.height);
@@ -249,10 +261,23 @@ const renderFrame = (index) => {
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 };
 
+// Agrupa vários pedidos de desenho num só por quadro de tela
+let renderQueued = false;
+const scheduleRender = () => {
+    if (renderQueued) return;
+    renderQueued = true;
+    requestAnimationFrame(() => {
+        renderQueued = false;
+        renderFrame(scrollFrameIndex);
+    });
+};
+
+// Altura de rolagem da animação: fixa para todos os produtos, para a página não "pular"
+// quando o produto troca sozinho enquanto o visitante lê as seções de baixo
+const HERO_SCROLL_HEIGHT = 2400;
+
 const setupScrollTimeline = () => {
-    const variant = variants[currentVariantIndex];
-    // 1 frame = 20px of scroll
-    const scrollHeight = variant.frameCount * 20;
+    const scrollHeight = HERO_SCROLL_HEIGHT;
     ui.scrollProxy.style.height = `${scrollHeight}px`;
 
     // Position page content right after the scroll proxy
@@ -286,36 +311,26 @@ window.addEventListener('scroll', () => {
         // Request Animation Frame for performance
         if (frameIndex !== scrollFrameIndex) {
             scrollFrameIndex = frameIndex;
-            requestAnimationFrame(() => renderFrame(scrollFrameIndex));
+            scheduleRender();
         }
     } else if (window.scrollY > maxScroll) {
         // Stick to last frame when scrolling past hero
         if (scrollFrameIndex !== totalScrollFrames) {
             scrollFrameIndex = totalScrollFrames;
-            requestAnimationFrame(() => renderFrame(scrollFrameIndex));
+            scheduleRender();
         }
-        // Toggle WhatsApp Float when scrolling out of Hero Section
-        const waFloat = document.getElementById('wa-float');
-        if (waFloat) {
-            if (window.scrollY > maxScroll) {
-                waFloat.classList.add('visible');
-            } else {
-                waFloat.classList.remove('visible');
-            }
-        }
+    }
 
-        // Hide hero to prevent it from showing on overscroll at the bottom of the page
-        const heroSection = document.getElementById('inicio');
-        if (heroSection) {
-            if (window.scrollY >= maxScroll + window.innerHeight) {
-                heroSection.style.visibility = 'hidden';
-            } else {
-                heroSection.style.visibility = 'visible';
-            }
-        }
-    } else {
-        const heroSection = document.getElementById('inicio');
-        if (heroSection) heroSection.style.visibility = 'visible';
+    // Avaliado a cada rolagem (não só abaixo da animação), para que um salto direto
+    // do rodapé para o topo volte a mostrar a animação e esconda o botão flutuante
+    const waFloat = document.getElementById('wa-float');
+    if (waFloat) waFloat.classList.toggle('visible', window.scrollY > maxScroll);
+
+    // Hide hero to prevent it from showing on overscroll at the bottom of the page
+    const heroSection = document.getElementById('inicio');
+    if (heroSection) {
+        heroSection.style.visibility =
+            window.scrollY >= maxScroll + window.innerHeight ? 'hidden' : 'visible';
     }
 });
 
@@ -361,21 +376,27 @@ const updateUIContent = (vIndex) => {
     }, 400); // match CSS transition duration
 };
 
+let isSwitching = false;
 const switchVariant = async (direction) => {
+    if (isSwitching) return;
+    isSwitching = true;
     let newIndex = currentVariantIndex + direction;
 
     if (newIndex < 0) newIndex = variants.length - 1;
     if (newIndex >= variants.length) newIndex = 0;
 
-    const targetVariant = variants[newIndex];
-
-    // If target variant frames are not loaded, load them in background first
-    if (!loadedImagesCache[targetVariant.folder]) {
-        await preloadImages(newIndex, true);
-    }
+    // Espera só o primeiro quadro do próximo produto; o resto carrega depois da troca
+    ui.bgLoader.classList.add('active');
+    ui.btnPrev.style.pointerEvents = 'none';
+    ui.btnNext.style.pointerEvents = 'none';
+    await loadVariantFrames(newIndex);
+    ui.bgLoader.classList.remove('active');
+    ui.btnPrev.style.pointerEvents = 'auto';
+    ui.btnNext.style.pointerEvents = 'auto';
 
     currentVariantIndex = newIndex;
     updateUIContent(currentVariantIndex);
+    isSwitching = false;
 };
 
 // Auto Play Logic for Hero Section
@@ -383,6 +404,9 @@ let autoSwitchTimer;
 const startAutoSwitch = () => {
     clearInterval(autoSwitchTimer);
     autoSwitchTimer = setInterval(() => {
+        // Só troca (e baixa o próximo produto) se a animação estiver na tela e a aba visível
+        const heroInView = window.scrollY < ui.scrollProxy.offsetHeight - window.innerHeight;
+        if (document.hidden || !heroInView) return;
         switchVariant(1);
     }, 15000); // Switch every 15 seconds
 };
@@ -572,6 +596,7 @@ const init = async () => {
         history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
+    const firstFrameReady = loadVariantFrames(currentVariantIndex);
     await loadTexts();
     resizeCanvas();
     const variant = variants[currentVariantIndex];
@@ -594,8 +619,11 @@ const init = async () => {
     }
 
     setupScrollTimeline();
-    // Preload first variant blocks
-    await preloadImages(currentVariantIndex, false);
+    // Mostra a página assim que o primeiro quadro chega; o resto continua carregando
+    await firstFrameReady;
+    ui.loadingPercent.textContent = 100;
+    ui.loadingBar.style.width = '100%';
+    setTimeout(() => ui.loading.classList.add('hidden'), 200);
 
     renderRealReviews(); // Carregar depoimentos reais manuais ANTES de observar
     setupRevealObserver();
