@@ -54,6 +54,9 @@
   --btn-solid-bg: var(--color-brand-accent);
   --btn-solid-text: #FFFFFF;
 
+  /* Azul da marca clareado para títulos legíveis sobre fundo escuro */
+  --heading-color: #8FA8F0;
+
   --nav-bg: rgba(9, 9, 11, 0.7);
 }
 
@@ -70,6 +73,8 @@
   --btn-solid-bg: var(--color-brand-accent);
   --btn-solid-text: #FFFFFF;
 
+  --heading-color: var(--color-brand-primary);
+
   --nav-bg: rgba(253, 253, 253, 0.8);
 }
 
@@ -82,6 +87,11 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Evita que o título da seção fique escondido atrás da barra fixa ao clicar no menu */
+section[id] {
+  scroll-margin-top: 90px;
 }
 
 body {
@@ -272,6 +282,64 @@ button:focus-visible {
   .nav-btn {
     display: none;
     /* Esconde botão de orçamento no topo do mobile para focar na logo */
+  }
+}
+
+/* Menu mobile (botão ☰ + lista suspensa) */
+.menu-toggle,
+.nav-links-cta {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: var(--text-main);
+    cursor: pointer;
+  }
+
+  .navbar.menu-open {
+    background: var(--bg-color);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .navbar.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 0;
+    right: 0;
+    padding: 0.5rem 4vw 1.5rem;
+    background: var(--bg-color);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .navbar.menu-open .nav-links a {
+    padding: 0.9rem 0;
+    font-size: 1rem;
+    text-align: center;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .navbar.menu-open .nav-links .nav-links-cta {
+    display: block;
+    margin-top: 1rem;
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--btn-solid-bg);
+    color: var(--btn-solid-text);
+    font-weight: 600;
   }
 }
 
@@ -817,7 +885,7 @@ button:focus-visible {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
   letter-spacing: -0.02em;
 }
 
@@ -1013,7 +1081,7 @@ button:focus-visible {
 }
 
 .title-marcas {
-  color: var(--color-brand-primary) !important;
+  color: var(--heading-color) !important;
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 3rem;
@@ -1083,7 +1151,7 @@ html[data-theme="dark"] .theme-dark-logo {
 }
 
 .servicos-header-text .section-title {
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 25px;
@@ -1587,7 +1655,7 @@ html[data-theme="dark"] .theme-dark-logo {
 .stat-label {
   font-weight: 700;
   font-size: 1.5rem;
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
 }
 
 .stat-sublabel {
@@ -1605,14 +1673,14 @@ html[data-theme="dark"] .theme-dark-logo {
 .stat-value {
   font-size: 5rem;
   font-weight: 800;
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
   line-height: 1;
 }
 
 .stat-plus {
   font-size: 3.5rem;
   font-weight: 700;
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
 }
 
 .stat-arrow {
@@ -1693,7 +1761,7 @@ html[data-theme="dark"] .theme-dark-logo {
 
 .faq-item.active .chevron {
   transform: rotate(180deg);
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
 }
 
 .faq-answer {
@@ -1726,7 +1794,7 @@ html[data-theme="dark"] .theme-dark-logo {
 }
 
 .contact-card-content h3 {
-  color: var(--color-brand-primary);
+  color: var(--heading-color);
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
