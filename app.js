@@ -421,28 +421,6 @@ ui.btnNext.addEventListener('click', () => {
 });
 
 
-// --- 5b. MOBILE MENU ---
-const menuToggle = document.getElementById('menu-toggle');
-
-const setMenuOpen = (open) => {
-    ui.navbar.classList.toggle('menu-open', open);
-    menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-};
-
-menuToggle.addEventListener('click', () => {
-    setMenuOpen(!ui.navbar.classList.contains('menu-open'));
-});
-
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => setMenuOpen(false));
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setMenuOpen(false);
-});
-
-
 // --- 6. THEME TOGGLE ---
 const iconSun = ui.themeToggle.querySelector('.icon-sun');
 const iconMoon = ui.themeToggle.querySelector('.icon-moon');
